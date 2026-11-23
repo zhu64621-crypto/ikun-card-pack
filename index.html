@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ikun变装秀 · 3D 全息撕卡包</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true">
+    <div class="backdrop-grid"></div>
+    <div class="backdrop-glow"></div>
+  </div>
+
+  <header class="hud">
+    <div class="hud-left">
+      <div class="brand-pill">
+        <span class="brand-dot"></span>
+        <span class="brand-name">ikun变装秀</span>
+        <span class="brand-tag">S01</span>
+      </div>
+    </div>
+
+    <nav class="hud-dock" aria-label="舞台控制">
+      <button type="button" class="dock-btn" id="btn-theme" title="切换舞台光效">
+        <span class="btn-ico" id="theme-ico">🌙</span>
+        <span id="theme-label">暗房</span>
+      </button>
+      <span class="dock-sep" aria-hidden="true"></span>
+      <button type="button" class="dock-btn" id="btn-god" aria-pressed="false" title="下一包必定开出欧皇全闪包">
+        <span class="btn-ico">✨</span>
+        <span id="god-label">全闪测试</span>
+      </button>
+      <span class="dock-sep" aria-hidden="true"></span>
+      <button type="button" class="dock-btn" id="btn-album" title="查看收集图鉴">
+        <span class="btn-ico">🗂</span>
+        <span>卡册</span>
+        <span class="count-chip" id="album-count">0/8</span>
+      </button>
+      <span class="dock-sep" aria-hidden="true"></span>
+      <button type="button" class="dock-btn icon-only" id="btn-mute" aria-pressed="false" aria-label="静音切换" title="静音 / 开启音效">
+        <span id="mute-ico">🔊</span>
+      </button>
+    </nav>
+
+    <div class="hud-right">
+      <div class="mode-pill" id="mode-pill">
+        <span class="mode-dot"></span>
+        <span id="mode-label">标准卡池</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="toast-pill" id="toast-pill" aria-live="polite"></div>
+  <div class="god-banner" id="god-banner" aria-live="polite">GOD PACK TRIGGERED · 欧皇全闪包降临 · 5 张高罕悬念卡</div>
+
+  <main class="stage" id="stage">
+    <div class="scene" id="scene">
+      <div class="ground" id="ground"></div>
+
+      <div class="flow" id="flow" aria-hidden="true">
+        <svg class="rays" viewBox="0 0 600 420" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="ray-g1" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.95" />
+              <stop offset="45%" stop-color="#f472b6" stop-opacity="0.72" />
+              <stop offset="100%" stop-color="#fde047" stop-opacity="0" />
+            </linearGradient>
+            <linearGradient id="ray-g2" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#fde047" stop-opacity="0.9" />
+              <stop offset="50%" stop-color="#a855f7" stop-opacity="0.65" />
+              <stop offset="100%" stop-color="#22d3ee" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          <path class="ray-beam b1" d="M235 390 Q210 210 70 25 L165 15 Q250 185 270 390 Z" fill="url(#ray-g1)" />
+          <path class="ray-beam b2" d="M275 390 Q275 200 225 10 L365 10 Q320 200 325 390 Z" fill="url(#ray-g2)" />
+          <path class="ray-beam b3" d="M330 390 Q355 210 435 15 L530 25 Q395 215 365 390 Z" fill="url(#ray-g1)" />
+        </svg>
+      </div>
+
+      <div class="pack" id="pack">
+        <div class="rims" id="pack-rims" aria-hidden="true"></div>
+
+        <div class="skin back" aria-hidden="true">
+          <div class="pack-back-art">
+            <div class="back-seal-line"></div>
+            <div class="back-emblem">ikun变装秀</div>
+            <div class="back-sub">SERIES 01 · IKUN COSPLAY</div>
+            <div class="back-barcode"></div>
+          </div>
+          <div class="creases"></div>
+        </div>
+
+        <div class="skin front">
+          <div class="foil-sheen"></div>
+          <div class="creases"></div>
+
+          <div class="seal-band">
+            <div class="seal-glow" id="seal-glow"></div>
+            <span class="tear-tag">TEAR HERE ⟶</span>
+            <div class="perf-line"></div>
+          </div>
+
+          <div class="pack-body-content">
+            <div class="pack-brand">
+              <span class="pack-kicker">IKUN ARCHIVE // EDITION 01</span>
+              <h1 class="pack-title">ikun变装秀</h1>
+              <p class="pack-sub">IKUN COSPLAY · 5 FOIL CARDS</p>
+            </div>
+
+            <div class="orb" id="pack-orb" aria-hidden="true">
+              <div class="orb-aura"></div>
+              <svg class="orb-star" viewBox="0 0 200 200">
+                <defs>
+                  <linearGradient id="chick-gold" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#fff166" />
+                    <stop offset="65%" stop-color="#ffe135" />
+                    <stop offset="100%" stop-color="#f4b41a" />
+                  </linearGradient>
+                </defs>
+                <!-- Cute chick head with head tuft & bold cartoon outline -->
+                <path
+                  d="M100 30 C92 14 78 14 78 28 C78 32 82 36 86 38 C52 44 28 74 28 110 C28 152 60 180 100 180 C140 180 172 152 172 110 C172 72 146 42 110 38 C114 30 116 18 106 16 C100 15 99 23 100 30 Z"
+                  fill="url(#chick-gold)"
+                  stroke="#111111"
+                  stroke-width="7.5"
+                  stroke-linejoin="round"
+                />
+                <path d="M40 124 C50 160 82 174 126 168 C82 178 44 158 38 118 Z" fill="#eab308" opacity="0.65" />
+                <ellipse cx="72" cy="64" rx="22" ry="8" transform="rotate(-22 72 64)" fill="#ffffff" opacity="0.45" />
+              </svg>
+              <div class="orb-face">
+                <div class="orb-eyes">
+                  <span class="eye left"><span class="pupil"></span></span>
+                  <span class="eye right"><span class="pupil"></span></span>
+                </div>
+                <div class="orb-eyes-hurt">
+                  <span class="hurt-eye left"></span>
+                  <span class="hurt-eye right"></span>
+                </div>
+                <div class="orb-cheeks">
+                  <span class="cheek"></span>
+                  <span class="cheek"></span>
+                </div>
+                <div class="orb-smile"></div>
+                <div class="orb-ouch"></div>
+              </div>
+              <div class="orb-drip"></div>
+            </div>
+
+            <div class="pack-footer">
+              <span>SERIES 01</span>
+              <span class="pack-count-pill">5 CARDS</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lips" aria-hidden="true">
+          <div class="lip" id="tear-lip"></div>
+        </div>
+
+        <div class="flap" id="pack-flap" aria-hidden="true"></div>
+
+        <button class="hit" id="hit" type="button" aria-label="横向拖拽撕开卡包，或点击直接开启"></button>
+      </div>
+
+      <div class="cards-layer" id="cards-layer"></div>
+    </div>
+  </main>
+
+  <div class="bottom-dock">
+    <div class="hint-pill" id="hint-pill">横向划过封口撕开 · 滑过小鸡听音效 · 晃动卡包可验包</div>
+    <div class="actions" id="actions">
+      <button type="button" class="action-btn primary" id="btn-flip-all">一键全翻</button>
+      <button type="button" class="action-btn secondary" id="btn-again">再拆一包</button>
+    </div>
+  </div>
+
+  <canvas id="fx" aria-hidden="true"></canvas>
+
+  <!-- 3D Spotlight Inspect Modal -->
+  <div class="modal-backdrop" id="inspect-modal" hidden>
+    <div class="inspect-dialog" role="dialog" aria-modal="true" aria-labelledby="inspect-name">
+      <button type="button" class="modal-close" id="inspect-close" aria-label="关闭检视">✕</button>
+      <div class="inspect-layout">
+        <div class="inspect-card-stage" id="inspect-card-stage"></div>
+        <div class="inspect-info">
+          <div class="inspect-badges">
+            <span class="rarity-pill" id="inspect-rarity"></span>
+            <span class="symbol-pill" id="inspect-symbol"></span>
+            <span class="num-pill" id="inspect-number"></span>
+          </div>
+          <h2 class="inspect-name" id="inspect-name"></h2>
+          <div class="inspect-cntitle" id="inspect-cntitle"></div>
+          <p class="inspect-flavor" id="inspect-flavor"></p>
+          <div class="inspect-stats" id="inspect-stats"></div>
+          <div class="inspect-tip">移动光标可 360° 检视分区全息与 3D 立体视差</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Collection Album Modal -->
+  <div class="modal-backdrop" id="album-modal" hidden>
+    <div class="album-dialog" role="dialog" aria-modal="true" aria-labelledby="album-title">
+      <div class="album-header">
+        <div>
+          <div class="album-kicker" id="album-progress-text">图鉴进度 0 / 8 · 已拆 0 包 · 累计收录 0 张</div>
+          <h2 class="album-title" id="album-title">ikun变装秀 · Series 01 典藏卡册</h2>
+        </div>
+        <div class="album-actions">
+          <button type="button" class="hud-btn danger" id="btn-reset-album">重置存档</button>
+          <button type="button" class="hud-btn" id="album-close">关闭</button>
+        </div>
+      </div>
+      <div class="album-grid" id="album-grid"></div>
+    </div>
+  </div>
+
+  <script src="sprites-data.js"></script>
+  <script src="cards.js"></script>
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
